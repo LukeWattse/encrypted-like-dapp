@@ -2,12 +2,12 @@
 pragma solidity ^0.8.24;
 
 import {FHE, euint32, externalEuint32} from "@fhevm/solidity/lib/FHE.sol";
-import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /// @title EncryptedLike - A decentralized social like system with fully encrypted interactions
 /// @notice This contract allows users to create posts with reactions, comments, and categories
 /// @dev All interaction counts are encrypted using FHEVM, only post authors can decrypt
-contract EncryptedLike is SepoliaConfig {
+contract EncryptedLike is ZamaEthereumConfig {
     /// @notice Reaction types enum
     enum ReactionType {
         Like,      // 0: 👍 like

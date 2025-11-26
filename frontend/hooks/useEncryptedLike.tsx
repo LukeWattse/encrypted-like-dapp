@@ -775,6 +775,13 @@ export const useEncryptedLike = (parameters: {
             sig.startTimestamp,
             sig.durationDays
           );
+          const resMap: Record<string, bigint> = Array.isArray((res as any)?.results)
+            ? (res as any).results.reduce((acc: Record<string, bigint>, item: any) => {
+                const v = (item?.value ?? item?.decryptedValue) as any;
+                acc[item.handle] = typeof v === "bigint" ? v : BigInt(v ?? 0);
+                return acc;
+              }, {} as Record<string, bigint>)
+            : (res as Record<string, bigint>);
 
           setMessage("FHEVM userDecrypt completed!");
 
@@ -786,13 +793,13 @@ export const useEncryptedLike = (parameters: {
           setPosts((prev) =>
             prev.map((p) =>
               p.id === postId
-                ? { ...p, decryptedLikeCount: res[thisLikeCountHandle] as bigint }
+                ? { ...p, decryptedLikeCount: resMap[thisLikeCountHandle] }
                 : p
             )
           );
 
           setMessage(
-            `Post ${postId} has ${res[thisLikeCountHandle]} likes`
+            `Post ${postId} has ${resMap[thisLikeCountHandle]} likes`
           );
         } catch (error: any) {
           console.error("Decryption failed:", error);
@@ -901,6 +908,13 @@ export const useEncryptedLike = (parameters: {
             sig.startTimestamp,
             sig.durationDays
           );
+          const resMap: Record<string, bigint> = Array.isArray((res as any)?.results)
+            ? (res as any).results.reduce((acc: Record<string, bigint>, item: any) => {
+                const v = (item?.value ?? item?.decryptedValue) as any;
+                acc[item.handle] = typeof v === "bigint" ? v : BigInt(v ?? 0);
+                return acc;
+              }, {} as Record<string, bigint>)
+            : (res as Record<string, bigint>);
 
           setMessage("FHEVM userDecrypt completed!");
 
@@ -916,7 +930,7 @@ export const useEncryptedLike = (parameters: {
                     ...p,
                     decryptedReactions: {
                       ...p.decryptedReactions,
-                      [reactionType]: res[thisReactionHandle] as bigint,
+                      [reactionType]: resMap[thisReactionHandle],
                     },
                   }
                 : p
@@ -924,7 +938,7 @@ export const useEncryptedLike = (parameters: {
           );
 
           setMessage(
-            `Post ${postId} has ${res[thisReactionHandle]} ${ReactionNames[reactionType]}`
+            `Post ${postId} has ${resMap[thisReactionHandle]} ${ReactionNames[reactionType]}`
           );
         } catch (error: any) {
           console.error("Decryption failed:", error);
@@ -1027,6 +1041,13 @@ export const useEncryptedLike = (parameters: {
             sig.startTimestamp,
             sig.durationDays
           );
+          const resMap: Record<string, bigint> = Array.isArray((res as any)?.results)
+            ? (res as any).results.reduce((acc: Record<string, bigint>, item: any) => {
+                const v = (item?.value ?? item?.decryptedValue) as any;
+                acc[item.handle] = typeof v === "bigint" ? v : BigInt(v ?? 0);
+                return acc;
+              }, {} as Record<string, bigint>)
+            : (res as Record<string, bigint>);
 
           setMessage("FHEVM userDecrypt completed!");
 
@@ -1038,13 +1059,13 @@ export const useEncryptedLike = (parameters: {
           setPosts((prev) =>
             prev.map((p) =>
               p.id === postId
-                ? { ...p, decryptedCommentCount: res[thisCommentCountHandle] as bigint }
+                ? { ...p, decryptedCommentCount: resMap[thisCommentCountHandle] }
                 : p
             )
           );
 
           setMessage(
-            `Post ${postId} has ${res[thisCommentCountHandle]} comments`
+            `Post ${postId} has ${resMap[thisCommentCountHandle]} comments`
           );
         } catch (error: any) {
           console.error("Decryption failed:", error);
@@ -1134,6 +1155,13 @@ export const useEncryptedLike = (parameters: {
             sig.startTimestamp,
             sig.durationDays
           );
+          const resMap: Record<string, bigint> = Array.isArray((res as any)?.results)
+            ? (res as any).results.reduce((acc: Record<string, bigint>, item: any) => {
+                const v = (item?.value ?? item?.decryptedValue) as any;
+                acc[item.handle] = typeof v === "bigint" ? v : BigInt(v ?? 0);
+                return acc;
+              }, {} as Record<string, bigint>)
+            : (res as Record<string, bigint>);
 
           setMessage("FHEVM userDecrypt completed!");
 
@@ -1156,7 +1184,7 @@ export const useEncryptedLike = (parameters: {
             return chunkChars.join("");
           };
           const decryptedText = thisContentHandles
-            .map((h) => Number(res[h] as bigint))
+            .map((h) => Number(resMap[h]))
             .map(decodeChunk)
             .join("");
 
