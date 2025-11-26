@@ -103,10 +103,9 @@ function getEncryptedLikeByChainId(
     return { abi: EncryptedLikeABI.abi };
   }
 
-  const entry =
-    EncryptedLikeAddresses[chainId.toString() as keyof typeof EncryptedLikeAddresses];
+  const entry = (EncryptedLikeAddresses as any)[chainId.toString()];
 
-  if (!("address" in entry) || entry.address === ethers.ZeroAddress) {
+  if (!entry || !entry.address || entry.address === ethers.ZeroAddress) {
     return { abi: EncryptedLikeABI.abi, chainId };
   }
 
